@@ -1,0 +1,17 @@
+services:
+  fastapi:
+    build: .
+    container_name: fastapi
+    ports:
+      - "${FASTAPI_PORT:-8000}:8000"  # Exposes FastAPI on the port specified in .env, fallback to 8000 if not set
+    environment:
+      - MONGO_URI=mongodb://<mongodb_host>:27017/${MONGO_INITDB_DATABASE}  # Replace <mongodb_host> with your MongoDB host or IP
+    networks:
+      - dockernet
+    restart: always
+    env_file:
+      - .env  
+
+networks:
+  dockernet:
+    external: true  # Connect to an external network if MongoDB is in a different Compose project or container
