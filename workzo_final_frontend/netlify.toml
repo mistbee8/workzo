@@ -1,0 +1,21 @@
+[build]
+  command = "npm run build"     # Adjust if your build command is different
+  publish = "dist"              # Change to 'build' or 'out' based on your framework
+
+# Optional: redirect all routes to index.html (for SPA routing)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Optional: fix MIME type for JS modules (to avoid application/octet-stream error)
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Content-Type = "application/javascript"
+
+# Optional: cache assets for better performance
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
